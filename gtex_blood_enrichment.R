@@ -5,7 +5,7 @@ library(ggplot2)
 library(tidyr)
 
 # In this script, we will calculate the enrichment of lymphocyte DHS peaks/footprints in the lymphocyte count GWAS. 
-
+set.seed(252)
 thousand_genome_panel_hg38 = read_tsv("/Users/ashvinravi/Desktop/bmi206/individual_project/thousand_genome_panel_hg38.tsv.gz")
 
 gwas_catalog <- read_tsv("/Users/ashvinravi/Desktop/bmi206/group_project/gwas_catalog_v1.0-associations_e110_r2023-11-08.tsv")
