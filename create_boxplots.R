@@ -3,9 +3,9 @@ library(readr)
 library(dplyr)
 library(rstatix)
 
-enrichment_blood_gwas <- read_tsv("/Users/ashvinravi/Desktop/bmi206/individual_project/blood_gwas_enrichment_table.tsv")
-enrichment_blood_eQTL <- read_tsv("/Users/ashvinravi/Desktop/bmi206/individual_project/blood_eQTL_enrichment_table.tsv")
-enrichment_blood_sQTL <- read_tsv("/Users/ashvinravi/Desktop/bmi206/individual_project/blood_sQTL_enrichment_table.tsv")
+enrichment_blood_gwas <- read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/blood_gwas_enrichment_table.tsv")
+enrichment_blood_eQTL <- read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/blood_eQTL_enrichment_table.tsv")
+enrichment_blood_sQTL <- read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/blood_sQTL_enrichment_table.tsv")
 
 enrichment_blood_gwas$Variant <- "GWAS"
 enrichment_blood_eQTL$Variant <- "eQTL"
@@ -32,9 +32,9 @@ boxplot <- ggplot(enrichment_table, aes(x=Category, y=enrichment_ratio, fill=Var
 
 ####### ENRICHMENT LUNG PLOT
 
-enrichment_lung_gwas <- read_tsv("/Users/ashvinravi/Desktop/bmi206/individual_project/lung_gwas_enrichment_table.tsv")
-enrichment_lung_eQTL <- read_tsv("/Users/ashvinravi/Desktop/bmi206/individual_project/lung_eQTL_enrichment_table.tsv")
-enrichment_lung_sQTL <- read_tsv("/Users/ashvinravi/Desktop/bmi206/individual_project/lung_sQTL_enrichment_table.tsv")
+enrichment_lung_gwas <- read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/lung_gwas_enrichment_table.tsv")
+enrichment_lung_eQTL <- read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/lung_eQTL_enrichment_table.tsv")
+enrichment_lung_sQTL <- read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/lung_sQTL_enrichment_table.tsv")
 
 enrichment_lung_gwas$Variant <- "GWAS"
 enrichment_lung_eQTL$Variant <- "eQTL"
@@ -95,6 +95,24 @@ gwas_boxplot <- ggplot(enrichment_lung_gwas, aes(x=Category, y=enrichment_ratio,
         legend.text = element_text(size = 10), 
         legend.title = element_text(size = 12))
 
-dunn_test(enrichment_ratio ~ Category, data = enrichment_lung_eQTL)
+enrichment_consensus_gwas = read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/consensus_gwas_enrichment.tsv")
+enrichment_consensus_eQTL = read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/enrichment_table_eQTL_consensus.tsv")
+enrichment_consensus_sQTL = read_tsv("/Users/ashvinravi/Desktop/bmi206/bmi206_individual_project/enrichment_results/enrichment_table_sQTL_consensus.tsv")
+
+
+
+eQTL_significance_lung=dunn_test(enrichment_ratio ~ Category, data = enrichment_lung_eQTL)
+sQTL_significance_lung=dunn_test(enrichment_ratio ~ Category, data = enrichment_lung_sQTL)
+gwas_significance_lung=dunn_test(enrichment_ratio ~ Category, data = enrichment_lung_gwas)
+
+eQTL_significance_blood=dunn_test(enrichment_ratio ~ Category, data = enrichment_blood_eQTL)
+sQTL_significance_blood=dunn_test(enrichment_ratio ~ Category, data = enrichment_blood_sQTL)
+gwas_significance_blood=dunn_test(enrichment_ratio ~ Category, data = enrichment_blood_gwas)
+
+eQTL_significance_consensus=dunn_test(enrichment_ratio ~ Category, data = enrichment_consensus_eQTL)
+sQTL_significance_consensus=dunn_test(enrichment_ratio ~ Category, data = enrichment_consensus_sQTL)
+gwas_significance_consensus=dunn_test(enrichment_ratio ~ Category, data = enrichment_consensus_gwas)
+
+
 
 
